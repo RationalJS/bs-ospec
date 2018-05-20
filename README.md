@@ -38,16 +38,18 @@ open BsOspec.Cjs;
 describe("Example", () => {
 
   test("sync example", () => {
-    f(x,y) |> equals("a correct value");
-    f(x,y) |> equals("a correct value", ~m="A descriptive failure message");
-    g(x,y) |> deepEquals(["another", "correct", "value"]);
+    f(x,y) |. equals(123);
+    f(x,y) |. equals(~m="A descriptive failure message", 123);
+    g(x,y) |. deepEquals(["another", "correct", "value"]);
   });
 
   testAsync("async example", done_ => {
+    /* _ _  _  _  _   ___ _ _   _ _ __ __  __ _ _  __ _ */
     /* Note how we use testAsync() instead of test() !! */
-    someTask()
-    |> Task.run(result => {
-      result |> equals("expected");
+    /*  ^^^ ^ ^ ^ ^^ ^ ^ ^ ^^ ^ ^ ^ ^ ^  ^^^ ^ ^^ ^^^ ^ */
+    someFuture()
+    |. Future.get(result => {
+      result |. equals("expected");
       done_()
     })
   });
@@ -55,9 +57,9 @@ describe("Example", () => {
   testAsyncLong("longer async example", (done_, timeout) => {
     timeout(2000) /* ospec default is 50 milliseconds. */
 
-    someLongTask()
-    |> Task.run(result => {
-      result |> equals("expected");
+    someLongFuture()
+    |. Future.get(result => {
+      result |. equals("expected");
       done_()
     })
   });

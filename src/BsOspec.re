@@ -46,28 +46,28 @@ module type Checker = {
 };
 
 module Assertions = (Checker : Checker) => {
-  let equals = (expected, ~m=?, actual) => switch(m) {
+  let equals = (actual, ~m=?, expected) => switch(m) {
     | Some(message) =>
       let desc = Checker.make(actual)##equals(expected);
       desc(. message)
     | None => Checker.make(actual)##equals(expected) |> ignore
   };
 
-  let deepEquals = (expected, ~m=?, actual) => switch(m) {
+  let deepEquals = (actual, ~m=?, expected) => switch(m) {
     | Some(message) =>
       let desc = Checker.make(actual)##deepEquals(expected);
       desc(. message)
     | None => Checker.make(actual)##deepEquals(expected) |> ignore
   };
 
-  let notEquals = (expected, ~m=?, actual) => switch(m) {
+  let notEquals = (actual, ~m=?, expected) => switch(m) {
     | Some(message) =>
       let desc = Checker.make(actual)##notEquals(expected);
       desc(. message)
     | None => Checker.make(actual)##notEquals(expected) |> ignore
   };
 
-  let notDeepEquals = (expected, ~m=?, actual) => switch(m) {
+  let notDeepEquals = (actual, ~m=?, expected) => switch(m) {
     | Some(message) =>
       let desc = Checker.make(actual)##notDeepEquals(expected);
       desc(. message)
